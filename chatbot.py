@@ -52,7 +52,7 @@ def message_count():
     data = request.form
     user_id = data.get('user_id')
     channel_id = data.get('channel_id')
-    message_count = message_count.get(user_id, 0)
+    message_count = refined_message_count[user_id]
     client.chat_postMessage(channel=channel_id, text= f'Message: {message_count}')
     return Response(), 200
 
