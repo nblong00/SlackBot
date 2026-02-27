@@ -32,10 +32,10 @@ def message(payload):
 @app.route('/message-count', methods=['POST'])
 def message_count():
     data = request.form
-    user_id = data.get('user_id')
+    slack_user_id = data.get('user_id')
     channel_id = data.get('channel_id')
-    # message_count = refined_message_count[user_id]
-    client.chat_postMessage(channel=channel_id, text= f'Message: {message_count}')
+    message_count = session.query(Message).filter(Message.user_id == slack_user_id).first()
+    client.chat_postMessage(channel=channel_id, text= f'Message: {message_count.count}')
     return Response(), 200
 
 
